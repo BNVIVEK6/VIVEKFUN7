@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIVEK Premium - Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <style>
+    :root {
+      --primary-color: #3a0ca3;
+      --secondary-color: #4cc9f0;
+      --accent-color: #7209b7;
+      --background-dark: #0d1b2a;
+      --card-bg: rgba(20, 33, 61, 0.75);
+      --text-primary: #e0e1dd;
+      --text-secondary: #8d99ae;
+      --success: #06d6a0;
+      --warning: #ffd166;
+      --danger: #ef476f;
+      --glass-effect: rgba(25, 30, 45, 0.8);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(76, 201, 240, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(58, 12, 163, 0.1) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .title-text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+      padding-bottom: 10px;
+    }
+    
+    .subtitle-text {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .login-container {
+      max-width: 100%;
+      margin: 20px auto;
+    }
+    
+    .card {
+      background: var(--glass-effect);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+      padding: 25px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+      z-index: 1;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+    }
+    
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .neon-text {
+      text-shadow: 0 0 5px var(--secondary-color), 
+                   0 0 10px var(--secondary-color);
+    }
+    
+    .input-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      background: rgba(20, 33, 61, 0.4);
+      border: 1px solid rgba(76, 201, 240, 0.3);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      padding: 12px 15px;
+      outline: none;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(76, 201, 240, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
+    }
+    
+    .btn {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: var(--text-primary);
+      border: none;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      width: 100%;
+      margin-top: 15px;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+      z-index: -1;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+    
+    .btn:hover::before {
+      opacity: 1;
+    }
+    
+    .btn i {
+      margin-right: 8px;
+    }
+    
+    .btn span {
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover span {
+      transform: translateX(3px);
+    }
+    
+    .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--text-primary);
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .error-message {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      display: none;
+    }
+    
+    .success-message {
+      color: var(--success);
+      font-size: 0.9rem;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      display: none;
+    }
+    
+    .logo-container {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    .logo-badge {
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      position: relative;
+      top: -15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .register-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .register-link {
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .register-link:hover {
+      text-decoration: underline;
+      color: var(--primary-color);
+    }
+    
+    /* Glow effects */
+    .glow {
+      position: absolute;
+      width: 40%;
+      height: 40%;
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    .glow-1 {
+      background: var(--secondary-color);
+      top: -10%;
+      left: -10%;
+      animation: floatGlow 8s infinite alternate;
+    }
+
+    .glow-2 {
+      background: var(--primary-color);
+      bottom: -10%;
+      right: -10%;
+      animation: floatGlow 10s infinite alternate-reverse;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(10%, 10%); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background glow effects -->
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  
+  <div class="container">
+    <div class="logo-container">
+      <div class="logo">VIVEK <span class="logo-badge">PREMIUM</span></div>
+      <p class="subtitle-text">Enter your activation key to access premium features</p>
+    </div>
+    
+    <div class="login-container">
+      <div class="card">
+        <div class="section-title neon-text">ACTIVATION</div>
+        
+        <div id="errorMessage" class="error-message">
+          <i class="fas fa-exclamation-circle"></i> Invalid activation key or expired. Please try again.
+        </div>
+        
+        <div id="successMessage" class="success-message">
+          <i class="fas fa-check-circle"></i> Activation successful! Redirecting...
+        </div>
+        
+        <label class="input-label" for="activationKey">
+          <i class="fas fa-key"></i> Activation Key
+        </label>
+        <input type="text" id="activationKey" placeholder="Enter your activation key" autocomplete="off">
+        
+        <button id="loginButton" class="btn">
+          <div id="spinner" class="spinner"></div>
+          <i class="fas fa-arrow-right"></i>
+          <span>ACTIVATE</span>
+        </button>
+        
+        <div class="register-text">
+          Don't have an activation key? 
+          <a href="https://win.www-bdg.com/#/register?invitationCode=851358652738" target="_blank" class="register-link">Register Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrqKuN2TW_vCM05zbAw1YB5P23hMVdN1o",
+      authDomain: "vivek-premium.firebaseapp.com",
+      projectId: "vivek-premium",
+      storageBucket: "vivek-premium.firebasestorage.app",
+      messagingSenderId: "601502493172",
+      appId: "1:601502493172:web:c67a5276dda7dfb67071a1",
+      measurementId: "G-CYC8CCL3XC",
+      databaseURL: "https://vivek-premium-default-rtdb.firebaseio.com"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    
+    // Elements
+    const activationKeyInput = document.getElementById('activationKey');
+    const loginButton = document.getElementById('loginButton');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+    const spinner = document.getElementById('spinner');
+    
+    // Event listener for login button
+    loginButton.addEventListener('click', validateKey);
+    
+    // Event listener for Enter key
+    activationKeyInput.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        validateKey();
+      }
+    });
+    
+    // Validate activation key
+    function validateKey() {
+      const key = activationKeyInput.value.trim();
+      
+      if (!key) {
+        showError();
+        return;
+      }
+      
+      // Show spinner
+      spinner.style.display = 'block';
+      loginButton.disabled = true;
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+      
+      // Check key in Firebase
+      firebase.database().ref('keys/' + key).once('value')
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            const keyData = snapshot.val();
+            const now = Date.now();
+            
+            if (keyData.active && keyData.expiresAt > now) {
+              // Valid key
+              showSuccess();
+              
+              // Store key in session storage for prediction page
+              sessionStorage.setItem('activationKey', key);
+              sessionStorage.setItem('expiresAt', keyData.expiresAt);
+              
+              // Redirect to prediction page after short delay
+              setTimeout(() => {
+                window.location.href = 'main.html';
+              }, 1500);
+              
+            } else {
+              // Expired key
+              showError();
+            }
+          } else {
+            // Invalid key
+            showError();
+          }
+        })
+        .catch(error => {
+          console.error("Error validating key:", error);
+          showError();
+        })
+        .finally(() => {
+          spinner.style.display = 'none';
+          loginButton.disabled = false;
+        });
+    }
+    
+    // Show error message
+    function showError() {
+      errorMessage.style.display = 'block';
+      successMessage.style.display = 'none';
+      activationKeyInput.focus();
+    }
+    
+    // Show success message
+    function showSuccess() {
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'block';
+    }
+    
+    // Check if user is already logged in
+    window.onload = function() {
+      const savedKey = sessionStorage.getItem('activationKey');
+      const expiresAt = sessionStorage.getItem('expiresAt');
+      
+      if (savedKey && expiresAt && parseInt(expiresAt) > Date.now()) {
+        window.location.href = 'main.html';
+      }
+    };
+  </script>
+</body>
+</html>
