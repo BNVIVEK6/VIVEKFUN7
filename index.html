@@ -445,7 +445,7 @@
               
               // Redirect to prediction page after short delay
               setTimeout(() => {
-                window.location.href = 'main.html';
+                window.location.href = 'login.html';
               }, 1500);
               
             } else {
@@ -486,7 +486,7 @@
       const expiresAt = sessionStorage.getItem('expiresAt');
       
       if (savedKey && expiresAt && parseInt(expiresAt) > Date.now()) {
-        window.location.href = 'main.html';
+        window.location.href = 'login.html';
       }
     };
   </script>
