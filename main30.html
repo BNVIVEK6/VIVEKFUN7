@@ -68,35 +68,6 @@
       0% { transform: scaleY(1); }
       100% { transform: scaleY(1.5); }
     }
-    /* Recent Predictions Table Scroll Styles */
-    .recent-predictions-container {
-      max-height: 300px;
-      overflow-y: auto;
-      position: relative;
-    }
-    .recent-predictions-container thead th {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 10;
-    }
-    .dark-theme .recent-predictions-container thead th {
-      background: #1a1a2e;
-    }
-    .recent-predictions-container::-webkit-scrollbar {
-      width: 8px;
-    }
-    .recent-predictions-container::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 4px;
-    }
-    .recent-predictions-container::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
-    }
-    .recent-predictions-container::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
   </style>
 </head>
 <body class="min-h-screen transition-all duration-300" id="mainBody">
@@ -166,7 +137,7 @@
               </div>
               <div class="text-center">
                 <p class="text-sm text-gray-500 dark:text-gray-400">Algorithm</p>
-                <p id="currentAlgorithm" class="text-sm font-medium text-blue-600">Weighted Moving Average</p>
+                <p id="currentAlgorithm" class="text-sm font-medium text-blue-600">Basic Algorithm</p>
               </div>
             </div>
             <div class="text-center mb-4">
@@ -215,24 +186,6 @@
               <i class="fas fa-calculator text-purple-600 text-2xl"></i>
             </div>
           </div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Total Wins</p>
-                <p id="totalWins" class="text-2xl font-bold text-green-600">-</p>
-              </div>
-              <i class="fas fa-trophy text-green-600 text-2xl"></i>
-            </div>
-          </div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Total Losses</p>
-                <p id="totalLosses" class="text-2xl font-bold text-red-600">-</p>
-              </div>
-              <i class="fas fa-times-circle text-red-600 text-2xl"></i>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -243,46 +196,46 @@
           <div class="algorithm-card p-4 border-2 border-blue-500 rounded-lg cursor-pointer" data-value="server1">
             <div class="text-center">
               <i class="fas fa-robot text-2xl text-blue-600 mb-2"></i>
-              <p class="font-medium">Weighted Moving Average</p>
-              <p class="text-xs text-gray-500">Recent-weighted average prediction</p>
+              <p class="font-medium">Basic Algorithm</p>
+              <p class="text-xs text-gray-500">Mean-based prediction</p>
             </div>
           </div>
           <div class="algorithm-card p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-value="server2">
             <div class="text-center">
               <i class="fas fa-chart-line text-2xl text-green-600 mb-2"></i>
-              <p class="font-medium">Momentum Trend</p>
-              <p class="text-xs text-gray-500">Trend-based momentum model</p>
+              <p class="font-medium">Trend Analysis</p>
+              <p class="text-xs text-gray-500">RSI-based model</p>
             </div>
           </div>
           <div class="algorithm-card p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-value="server3">
             <div class="text-center">
               <i class="fas fa-percentage text-2xl text-purple-600 mb-2"></i>
-              <p class="font-medium">Bayesian Probability</p>
-              <p class="text-xs text-gray-500">Probability-based prediction</p>
+              <p class="font-medium">Probability Model</p>
+              <p class="text-xs text-gray-500">Statistical analysis</p>
             </div>
           </div>
           <div class="algorithm-card p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-value="aiBased">
             <div class="text-center">
               <i class="fas fa-brain text-2xl text-red-600 mb-2"></i>
-              <p class="font-medium">Pattern Recognition</p>
-              <p class="text-xs text-gray-500">Sequence-based prediction</p>
+              <p class="font-medium">AI Prediction</p>
+              <p class="text-xs text-gray-500">Neural network</p>
             </div>
           </div>
           <div class="algorithm-card p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-value="calculation">
             <div class="text-center">
               <i class="fas fa-calculator text-2xl text-orange-600 mb-2"></i>
-              <p class="font-medium">Hybrid Ensemble</p>
-              <p class="text-xs text-gray-500">Combines multiple models</p>
+              <p class="font-medium">Statistical Engine</p>
+              <p class="text-xs text-gray-500">Advanced computation</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Recent Predictions -->
+      <!-- Recent Results -->
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Recent Predictions</h3>
-        <div class="recent-predictions-container" role="region" aria-label="Recent Predictions">
-          <table class="min-w-full" aria-describedby="recent-predictions-desc">
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
             <thead>
               <tr class="border-b border-gray-200 dark:border-gray-700">
                 <th class="text-left py-2 text-sm font-medium text-gray-500 dark:text-gray-400">Period</th>
@@ -296,7 +249,6 @@
             </tbody>
           </table>
         </div>
-        <p id="recent-predictions-desc" class="sr-only">Table displaying recent prediction history with period, prediction, result, status, and time.</p>
       </div>
     </div>
 
@@ -338,7 +290,7 @@
           <canvas id="accuracyChart"></canvas>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Win/Loss Distribution</h3>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Prediction Distribution</h3>
           <canvas id="distributionChart"></canvas>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
@@ -407,8 +359,6 @@
     let winStreak = 0;
     let totalPredictions = 0;
     let correctPredictions = 0;
-    let totalWins = 0;
-    let totalLosses = 0;
     let isDarkTheme = false;
     let soundEnabled = true;
     let notificationsEnabled = true;
@@ -419,11 +369,11 @@
 
     // Algorithm names mapping
     const algorithmNames = {
-      server1: 'Weighted Moving Average',
-      server2: 'Momentum Trend',
-      server3: 'Bayesian Probability',
-      aiBased: 'Pattern Recognition',
-      calculation: 'Hybrid Ensemble'
+      server1: 'Basic Algorithm',
+      server2: 'Trend Analysis',
+      server3: 'Probability Model',
+      aiBased: 'AI Prediction',
+      calculation: 'Statistical Engine'
     };
 
     // Initialize app
@@ -499,16 +449,24 @@
     }
 
     function switchTab(tabName) {
+      // Hide all tab contents
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
       });
+
+      // Show selected tab content
       document.getElementById(tabName).classList.add('active');
+
+      // Update tab buttons
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('border-blue-500', 'text-blue-600');
         btn.classList.add('border-transparent', 'text-gray-500');
       });
+
       document.querySelector(`[data-tab="${tabName}"]`).classList.remove('border-transparent', 'text-gray-500');
       document.querySelector(`[data-tab="${tabName}"]`).classList.add('border-blue-500', 'text-blue-600');
+
+      // Update charts if analytics tab is selected
       if (tabName === 'analytics') {
         setTimeout(updateCharts, 100);
       }
@@ -517,6 +475,7 @@
     function toggleTheme() {
       isDarkTheme = !isDarkTheme;
       const body = document.getElementById('mainBody');
+      
       if (isDarkTheme) {
         body.classList.add('dark-theme');
         document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
@@ -531,6 +490,7 @@
     function toggleSound() {
       soundEnabled = !soundEnabled;
       const soundBtn = document.getElementById('soundToggle');
+      
       if (soundEnabled) {
         soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
         localStorage.setItem('soundEnabled', 'true');
@@ -542,13 +502,19 @@
 
     function selectAlgorithm(algorithm) {
       selectedServer = algorithm;
+      
+      // Update visual selection
       document.querySelectorAll('.algorithm-card').forEach(card => {
         card.classList.remove('border-blue-500');
         card.classList.add('border-gray-200');
       });
+      
       document.querySelector(`[data-value="${algorithm}"]`).classList.remove('border-gray-200');
       document.querySelector(`[data-value="${algorithm}"]`).classList.add('border-blue-500');
+      
+      // Update current algorithm display
       document.getElementById('currentAlgorithm').textContent = algorithmNames[algorithm];
+      
       updatePrediction();
     }
 
@@ -578,9 +544,11 @@
             timestamp: timestamp
           })
         });
+
         if (!response.ok) throw new Error(`API failed: ${response.status}`);
         const data = await response.json();
         const latestResult = data?.data?.list?.[0];
+
         return latestResult ? {
           period: latestResult.issueNumber,
           result: parseInt(latestResult.number)
@@ -610,8 +578,10 @@
             timestamp: timestamp
           })
         });
+
         if (!response.ok) throw new Error(`API failed: ${response.status}`);
         const data = await response.json();
+        
         if (data?.data?.list) {
           pastResults = data.data.list.map(item => ({
             period: item.issueNumber,
@@ -619,10 +589,12 @@
             color: getNumberColor(parseInt(item.number)),
             size: parseInt(item.number) >= 5 ? 'BIG' : 'SMALL'
           }));
+          
           updatePastResultsDisplay();
         }
       } catch (error) {
         console.error("Failed to fetch past results:", error);
+        // Generate mock data for demo
         pastResults = Array.from({length: 10}, (_, i) => {
           const number = Math.floor(Math.random() * 10);
           return {
@@ -644,6 +616,7 @@
     }
 
     function updatePastResultsDisplay() {
+      // Update grid display
       const grid = document.getElementById('pastResultsGrid');
       grid.innerHTML = pastResults.map(result => {
         const bgClass = result.size === 'BIG' ? 'result-big' : 'result-small';
@@ -654,6 +627,8 @@
           </div>
         `;
       }).join('');
+
+      // Update table display
       const table = document.getElementById('pastResultsTable');
       table.innerHTML = pastResults.map(result => `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -680,64 +655,55 @@
 
     const predictionModels = {
       server1: numbers => {
-        if (numbers.length < 5) return Math.random() < 0.5 ? "BIG" : "SMALL";
-        const weights = [0.4, 0.3, 0.2, 0.1, 0.05];
-        const weightedSum = numbers.slice(0, 5).reduce((sum, num, i) => sum + num * weights[i], 0);
-        return weightedSum >= 5 ? "BIG" : "SMALL";
+        const mean = numbers.reduce((a, b) => a + b, 0) / numbers.length;
+        return numbers[0] > mean ? 'BIG' : 'SMALL';
       },
       server2: numbers => {
-        if (numbers.length < 3) return Math.random() < 0.5 ? "BIG" : "SMALL";
-        const differences = numbers.slice(0, 3).map((n, i) => i > 0 ? n - numbers[i - 1] : 0);
-        const momentum = differences.reduce((sum, diff) => sum + diff, 0) / differences.length;
-        return momentum > 0 ? "BIG" : "SMALL";
+        const changes = numbers.map((n, i) => i > 0 ? n - numbers[i - 1] : 0);
+        const gains = changes.filter(c => c > 0).length;
+        const losses = changes.filter(c => c < 0).length;
+        const rsi = losses === 0 ? 100 : 100 - (100 / (1 + (gains / losses)));
+        return rsi > 50 ? 'BIG' : 'SMALL';
       },
       server3: numbers => {
-        if (numbers.length < 5) return Math.random() < 0.5 ? "BIG" : "SMALL";
-        const bigCount = numbers.filter(n => n >= 5).length;
-        const total = numbers.length;
-        const probBig = bigCount / total;
-        const updatedProbBig = (0.5 * 0.1 + probBig * total) / (0.1 + total);
-        return updatedProbBig >= 0.5 ? "BIG" : "SMALL";
+        const big = numbers.filter(n => n >= 5).length;
+        return big >= numbers.length / 2 ? 'BIG' : 'SMALL';
       },
       aiBased: numbers => {
-        if (numbers.length < 6) return Math.random() < 0.5 ? "BIG" : "SMALL";
-        const lastThree = numbers.slice(0, 3).map(n => n >= 5 ? "BIG" : "SMALL");
-        const history = numbers.slice(3).map(n => n >= 5 ? "BIG" : "SMALL");
-        const patternMatch = history.join('').includes(lastThree.join(''));
-        if (patternMatch) {
-          const matchIndex = history.join('').indexOf(lastThree.join(''));
-          const nextResult = history[matchIndex - 1] || (Math.random() < 0.5 ? "BIG" : "SMALL");
-          return nextResult;
-        }
-        return Math.random() < 0.5 ? "BIG" : "SMALL";
+        let state = numbers.reduce((s, n) => 0.7 * s + 0.3 * (n / 10), 0);
+        return state * 10 >= 5 ? 'BIG' : 'SMALL';
       },
       calculation: numbers => {
-        if (numbers.length < 5) return Math.random() < 0.5 ? "BIG" : "SMALL";
-        const wmaResult = predictionModels.server1(numbers);
-        const momentumResult = predictionModels.server2(numbers);
-        const bayesianResult = predictionModels.server3(numbers);
-        const votes = [wmaResult, momentumResult, bayesianResult];
-        const bigVotes = votes.filter(v => v === "BIG").length;
-        return bigVotes >= 2 ? "BIG" : "SMALL";
+        const diff = numbers.map((n, i) => i > 0 ? n - numbers[i - 1] : 0);
+        const forecast = numbers[0] + diff.reduce((sum, d, i) => sum + d * (0.6 ** i), 0);
+        return forecast >= 5 ? 'BIG' : 'SMALL';
       }
     };
 
     async function updatePrediction() {
       const result = await fetchGameResult();
       if (!result) return;
+
       if (!lastFetchedPeriod || result.period !== lastFetchedPeriod) {
         lastFetchedPeriod = result.period;
         const nextPeriod = (BigInt(result.period) + 1n).toString();
-        const recent = pastResults.map(r => r.number).slice(0, 10);
+        const recent = historyData.filter(r => r.actualResult !== "Pending")
+          .map(r => r.actualResult === "BIG" ? 8 : 2);
+
         currentPrediction = recent.length >= 5 ?
           predictionModels[selectedServer](recent) :
           Math.random() < 0.5 ? "BIG" : "SMALL";
+
+        // Update UI
         document.getElementById('currentPeriod').textContent = nextPeriod;
         document.getElementById('currentPrediction').textContent = currentPrediction;
+        
         const predictionDisplay = document.getElementById('predictionDisplay');
         predictionDisplay.className = currentPrediction === 'BIG' ? 
           'inline-block px-8 py-4 rounded-lg text-white font-bold text-2xl result-big' :
           'inline-block px-8 py-4 rounded-lg text-white font-bold text-2xl result-small';
+
+        // Add to history
         historyData.unshift({
           period: nextPeriod,
           server: selectedServer,
@@ -746,6 +712,7 @@
           status: "",
           timestamp: new Date().toLocaleTimeString()
         });
+
         updateRecentHistory();
         countdownTimer = updateInterval / 1000;
       }
@@ -754,29 +721,31 @@
     async function updateResult() {
       const result = await fetchGameResult();
       if (!result) return;
+
       const index = historyData.findIndex(item => item.period === result.period);
       if (index !== -1 && historyData[index].actualResult === "Pending") {
         const actual = result.result >= 5 ? "BIG" : "SMALL";
         const win = historyData[index].prediction === actual;
+
         historyData[index].actualResult = actual;
         historyData[index].status = win ? "WIN" : "LOSS";
+
         totalPredictions++;
         if (win) {
           correctPredictions++;
-          totalWins++;
           winStreak++;
           if (notificationsEnabled) {
             showNotification('Prediction Correct! 🎉', 'win');
             if (soundEnabled) playNotificationSound('win');
           }
         } else {
-          totalLosses++;
           winStreak = 0;
           if (notificationsEnabled) {
             showNotification('Prediction Missed 😞', 'loss');
             if (soundEnabled) playNotificationSound('loss');
           }
         }
+
         updateStats();
         updateRecentHistory();
         updateCharts();
@@ -788,18 +757,18 @@
       document.getElementById('accuracyRate').textContent = accuracy + '%';
       document.getElementById('winStreak').textContent = winStreak;
       document.getElementById('totalPredictions').textContent = totalPredictions;
-      document.getElementById('totalWins').textContent = totalWins;
-      document.getElementById('totalLosses').textContent = totalLosses;
     }
 
     function updateRecentHistory() {
       const tbody = document.getElementById('recentHistory');
-      const recent = historyData.slice(0, 10);
+      const recent = historyData.slice(0, 5);
+      
       tbody.innerHTML = recent.map(item => {
         const statusClass = item.status === 'WIN' ? 'text-green-600' : 
                            item.status === 'LOSS' ? 'text-red-600' : 'text-yellow-600';
         const statusIcon = item.status === 'WIN' ? '✅' : 
                           item.status === 'LOSS' ? '❌' : '⏳';
+        
         return `
           <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
             <td class="py-2 text-sm font-medium">${item.period}</td>
@@ -826,8 +795,10 @@
     function showNotification(message, type) {
       const container = document.getElementById('notificationContainer');
       const notification = document.createElement('div');
+      
       const bgColor = type === 'win' ? 'bg-green-500' : 'bg-red-500';
       const icon = type === 'win' ? '🎉' : '😞';
+      
       notification.className = `notification ${bgColor} text-white p-4 rounded-lg shadow-lg max-w-sm`;
       notification.innerHTML = `
         <div class="flex items-center space-x-3">
@@ -838,10 +809,15 @@
           </button>
         </div>
       `;
+      
       container.appendChild(notification);
+      
+      // Show notification
       setTimeout(() => {
         notification.classList.add('show');
       }, 100);
+      
+      // Auto remove after 5 seconds
       setTimeout(() => {
         if (notification.parentElement) {
           notification.remove();
@@ -851,27 +827,36 @@
 
     function playNotificationSound(type) {
       if (!soundEnabled) return;
+      
+      // Create audio context for notification sounds
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
+      
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
+      
       if (type === 'win') {
-        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
-        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
-        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+        // Happy sound
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
       } else {
-        oscillator.frequency.setValueAtTime(311.13, audioContext.currentTime);
-        oscillator.frequency.setValueAtTime(293.66, audioContext.currentTime + 0.1);
-        oscillator.frequency.setValueAtTime(261.63, audioContext.currentTime + 0.2);
+        // Sad sound
+        oscillator.frequency.setValueAtTime(311.13, audioContext.currentTime); // Eb4
+        oscillator.frequency.setValueAtTime(293.66, audioContext.currentTime + 0.1); // D4
+        oscillator.frequency.setValueAtTime(261.63, audioContext.currentTime + 0.2); // C4
       }
+      
       gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.3);
     }
 
     function initializeCharts() {
+      // Accuracy Trend Chart
       const accuracyCtx = document.getElementById('accuracyChart').getContext('2d');
       charts.accuracy = new Chart(accuracyCtx, {
         type: 'line',
@@ -895,20 +880,24 @@
           }
         }
       });
+
+      // Distribution Chart
       const distributionCtx = document.getElementById('distributionChart').getContext('2d');
       charts.distribution = new Chart(distributionCtx, {
         type: 'doughnut',
         data: {
-          labels: ['Wins', 'Losses'],
+          labels: ['BIG', 'SMALL'],
           datasets: [{
             data: [0, 0],
-            backgroundColor: ['#10b981', '#ef4444']
+            backgroundColor: ['#ef4444', '#3b82f6']
           }]
         },
         options: {
           responsive: true
         }
       });
+
+      // Algorithm Performance Chart
       const algorithmCtx = document.getElementById('algorithmChart').getContext('2d');
       charts.algorithm = new Chart(algorithmCtx, {
         type: 'bar',
@@ -930,6 +919,8 @@
           }
         }
       });
+
+      // Streak Chart
       const streakCtx = document.getElementById('streakChart').getContext('2d');
       charts.streak = new Chart(streakCtx, {
         type: 'line',
@@ -955,16 +946,24 @@
     }
 
     function updateCharts() {
+      // Update accuracy chart
       const accuracyData = historyData.slice(0, 10).reverse().map((_, index) => {
         const subset = historyData.slice(0, index + 1);
         const correct = subset.filter(h => h.status === 'WIN').length;
         return subset.length > 0 ? Math.round((correct / subset.length) * 100) : 0;
       });
+      
       charts.accuracy.data.labels = accuracyData.map((_, i) => `Game ${i + 1}`);
       charts.accuracy.data.datasets[0].data = accuracyData;
       charts.accuracy.update();
-      charts.distribution.data.datasets[0].data = [totalWins, totalLosses];
+
+      // Update distribution chart
+      const bigCount = historyData.filter(h => h.prediction === 'BIG').length;
+      const smallCount = historyData.filter(h => h.prediction === 'SMALL').length;
+      charts.distribution.data.datasets[0].data = [bigCount, smallCount];
       charts.distribution.update();
+
+      // Update streak chart
       const streakData = [];
       let currentStreak = 0;
       historyData.slice().reverse().forEach(item => {
@@ -975,6 +974,7 @@
         }
         streakData.push(currentStreak);
       });
+      
       charts.streak.data.labels = streakData.map((_, i) => `Game ${i + 1}`);
       charts.streak.data.datasets[0].data = streakData;
       charts.streak.update();
@@ -986,13 +986,13 @@
         pastResults = [];
         totalPredictions = 0;
         correctPredictions = 0;
-        totalWins = 0;
-        totalLosses = 0;
         winStreak = 0;
+        
         updateStats();
         updateRecentHistory();
         updatePastResultsDisplay();
         updateCharts();
+        
         showNotification('All data cleared successfully', 'win');
       }
     }
