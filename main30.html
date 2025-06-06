@@ -149,35 +149,62 @@
       50% { transform: translateY(-10px); }
     }
 
-    .notification {
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    .sidebar {
+      position: fixed;
+      left: -300px;
+      top: 0;
+      width: 300px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      transition: left 0.3s ease-in-out;
+      z-index: 1000;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .notification.show {
-      transform: translateX(0);
+    .sidebar.open {
+      left: 0;
     }
 
-    .tab-content {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .tab-content.active {
+    .sidebar-item {
       display: block;
-      opacity: 1;
+      padding: 1rem 1.5rem;
+      color: #ffffff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
     }
 
-    .stats-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    .sidebar-item:hover, .sidebar-item.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-left-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
       transition: all 0.3s ease;
     }
 
-    .stats-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    .sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .algorithm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-height: 400px;
+      overflow-y: auto;
     }
 
     .algorithm-card {
@@ -185,6 +212,9 @@
       cursor: pointer;
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid transparent;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
     }
 
     .algorithm-card:hover {
@@ -196,6 +226,38 @@
       border-color: var(--primary-color);
       background: linear-gradient(135deg, var(--primary-color)20, var(--secondary-color)20);
       box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .past-results-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .past-result-item {
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .past-result-item:hover {
+      transform: scale(1.05);
+    }
+
+    .stats-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
     .countdown-circle {
@@ -227,6 +289,36 @@
       75% { transform: translateX(5px); }
     }
 
+    .notification {
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .content-section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .content-section.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .header-gradient {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+      background-size: 400% 400%;
+      animation: gradientShift 5s ease infinite;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 10px currentColor;
+    }
+
     .live-indicator {
       position: relative;
     }
@@ -251,9 +343,47 @@
       }
     }
 
+    .custom-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-color) transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 3px;
+    }
+
+    .period-display {
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     .theme-selector {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
       gap: 1rem;
     }
 
@@ -297,127 +427,50 @@
     .theme-default-preview {
       background: linear-gradient(45deg, #6366f1, #8b5cf6, #f59e0b);
     }
-
-    .status-indicator {
-      position: relative;
-      display: inline-block;
-    }
-
-    .status-indicator.online::after {
-      content: '';
-      position: absolute;
-      top: -2px;
-      right: -2px;
-      width: 12px;
-      height: 12px;
-      background: var(--success-color);
-      border-radius: 50%;
-      border: 2px solid var(--dark-bg);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-
-    .data-table {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .data-table th {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-    }
-
-    .data-table tr:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .chart-container {
-      position: relative;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 15px;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top: 4px solid var(--primary-color);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .period-display {
-      font-family: 'Orbitron', monospace;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .status-win {
-      color: var(--success-color);
-      text-shadow: 0 0 10px var(--success-color);
-    }
-
-    .status-loss {
-      color: var(--danger-color);
-      text-shadow: 0 0 10px var(--danger-color);
-    }
-
-    .status-pending {
-      color: var(--warning-color);
-      text-shadow: 0 0 10px var(--warning-color);
-    }
-
-    .custom-scrollbar {
-      scrollbar-width: thin;
-      scrollbar-color: var(--primary-color) transparent;
-    }
-
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: var(--primary-color);
-      border-radius: 3px;
-    }
-
-    .glow-text {
-      text-shadow: 0 0 10px currentColor;
-    }
-
-    .header-gradient {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-      background-size: 400% 400%;
-      animation: gradientShift 5s ease infinite;
-    }
   </style>
 </head>
 <body class="min-h-screen transition-all duration-500" id="mainBody">
   <!-- Particles Background -->
   <div id="particles-js" class="particles-bg"></div>
 
-  <!-- Navigation Header -->
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <div class="p-6 border-b border-gray-700">
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-eye text-2xl text-blue-400"></i>
+        <h2 class="text-xl font-bold orbitron">EVIL EYES</h2>
+      </div>
+    </div>
+    <nav class="mt-6">
+      <a href="#" class="sidebar-item active orbitron" data-section="dashboard">
+        <i class="fas fa-tachometer-alt mr-3"></i>DASHBOARD
+      </a>
+      <a href="#" class="sidebar-item orbitron" data-section="algorithms">
+        <i class="fas fa-brain mr-3"></i>ALGORITHMS
+      </a>
+      <a href="#" class="sidebar-item orbitron" data-section="results">
+        <i class="fas fa-history mr-3"></i>RESULTS
+      </a>
+      <a href="#" class="sidebar-item orbitron" data-section="analytics">
+        <i class="fas fa-chart-line mr-3"></i>ANALYTICS
+      </a>
+      <a href="#" class="sidebar-item orbitron" data-section="settings">
+        <i class="fas fa-cog mr-3"></i>SETTINGS
+      </a>
+    </nav>
+  </div>
+
+  <!-- Sidebar Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- Main Navigation Header -->
   <nav class="header-gradient text-white shadow-2xl relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <div class="flex items-center space-x-4">
+          <button id="sidebarToggle" class="p-3 rounded-xl glass-effect hover:bg-white hover:bg-opacity-20 transition-all duration-300">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
           <div class="relative">
             <i class="fas fa-eye text-4xl floating"></i>
             <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
@@ -438,9 +491,6 @@
             <div class="live-indicator w-4 h-4 bg-green-400 rounded-full"></div>
             <span class="text-sm font-medium orbitron">LIVE</span>
           </div>
-          <div class="status-indicator online">
-            <i class="fas fa-satellite-dish text-xl"></i>
-          </div>
         </div>
       </div>
     </div>
@@ -448,33 +498,11 @@
 
   <!-- Main Container -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-    <!-- Tab Navigation -->
-    <div class="glass-effect rounded-2xl shadow-2xl mb-8">
-      <div class="border-b border-white border-opacity-10">
-        <nav class="flex space-x-8 px-8">
-          <button class="tab-btn py-6 px-4 border-b-3 border-blue-500 text-blue-400 font-bold glow-text orbitron transition-all duration-300" data-tab="dashboard">
-            <i class="fas fa-tachometer-alt mr-3 text-xl"></i>DASHBOARD
-          </button>
-          <button class="tab-btn py-6 px-4 border-b-3 border-transparent text-gray-400 hover:text-white font-bold orbitron transition-all duration-300" data-tab="results">
-            <i class="fas fa-history mr-3 text-xl"></i>RESULTS
-          </button>
-          <button class="tab-btn py-6 px-4 border-b-3 border-transparent text-gray-400 hover:text-white font-bold orbitron transition-all duration-300" data-tab="analytics">
-            <i class="fas fa-chart-line mr-3 text-xl"></i>ANALYTICS
-          </button>
-          <button class="tab-btn py-6 px-4 border-b-3 border-transparent text-gray-400 hover:text-white font-bold orbitron transition-all duration-300" data-tab="winloss">
-            <i class="fas fa-trophy mr-3 text-xl"></i>WIN/LOSS
-          </button>
-          <button class="tab-btn py-6 px-4 border-b-3 border-transparent text-gray-400 hover:text-white font-bold orbitron transition-all duration-300" data-tab="settings">
-            <i class="fas fa-cog mr-3 text-xl"></i>SETTINGS
-          </button>
-        </nav>
-      </div>
-    </div>
-
-    <!-- Dashboard Tab -->
-    <div id="dashboard" class="tab-content active">
-      <!-- Current Prediction Card -->
+    
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="content-section active">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Main Prediction Card -->
         <div class="lg:col-span-2">
           <div class="gradient-border prediction-card floating">
             <div class="gradient-border-content">
@@ -514,11 +542,19 @@
               </div>
             </div>
           </div>
+
+          <!-- Past 10 Results -->
+          <div class="glass-effect rounded-2xl p-8 mt-8 shadow-2xl">
+            <h3 class="text-2xl font-black text-white mb-6 orbitron glow-text">LAST 10 GAME RESULTS</h3>
+            <div id="pastResultsGrid" class="past-results-grid">
+              <!-- Past results will be populated here -->
+            </div>
+          </div>
         </div>
 
         <!-- Quick Stats -->
         <div class="space-y-6">
-          <div class="stats-card rounded-2xl p-6 shadow-lg">
+          <div class="stats-card">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-400 orbitron">ACCURACY</p>
@@ -527,7 +563,7 @@
               <i class="fas fa-bullseye text-green-400 text-3xl"></i>
             </div>
           </div>
-          <div class="stats-card rounded-2xl p-6 shadow-lg">
+          <div class="stats-card">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-400 orbitron">WIN STREAK</p>
@@ -536,88 +572,49 @@
               <i class="fas fa-fire text-orange-500 text-3xl"></i>
             </div>
           </div>
-          <div class="stats-card rounded-2xl p-6 shadow-lg">
+          <div class="stats-card">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-gray-400 orbitron">TOTAL BETS</p>
-                <p id="totalPredictions" class="text-3xl font-black text-purple-400 orbitron glow-text">-</p>
+                <p class="text-sm text-gray-400 orbitron">TOTAL WINS</p>
+                <p id="totalWins" class="text-3xl font-black text-yellow-400 orbitron glow-text">-</p>
               </div>
-              <i class="fas fa-calculator text-purple-400 text-3xl"></i>
+              <i class="fas fa-trophy text-yellow-400 text-3xl"></i>
             </div>
           </div>
-          <div class="stats-card rounded-2xl p-6 shadow-lg">
+          <div class="stats-card">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-gray-400 orbitron">SUCCESS RATE</p>
-                <p id="successRate" class="text-3xl font-black text-yellow-400 orbitron glow-text">-</p>
+                <p class="text-sm text-gray-400 orbitron">TOTAL LOSSES</p>
+                <p id="totalLosses" class="text-3xl font-black text-red-400 orbitron glow-text">-</p>
               </div>
-              <i class="fas fa-chart-line text-yellow-400 text-3xl"></i>
+              <i class="fas fa-times-circle text-red-400 text-3xl"></i>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Algorithm Selection -->
-      <div class="glass-effect rounded-2xl p-8 mb-8 shadow-2xl">
-        <h3 class="text-2xl font-black text-white mb-6 orbitron glow-text">PREDICTION ALGORITHMS</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          <div class="algorithm-card selected rounded-xl p-6 text-center" data-value="quantum">
-            <i class="fas fa-atom text-3xl text-blue-400 mb-3"></i>
-            <p class="font-bold orbitron text-sm">QUANTUM</p>
-            <p class="text-xs text-gray-400">Advanced AI</p>
+          <div class="stats-card">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-400 orbitron">CONFIDENCE</p>
+                <p id="confidenceLevel" class="text-3xl font-black text-purple-400 orbitron glow-text">-</p>
+              </div>
+              <i class="fas fa-brain text-purple-400 text-3xl"></i>
+            </div>
           </div>
-          <div class="algorithm-card rounded-xl p-6 text-center" data-value="neural">
-            <i class="fas fa-brain text-3xl text-purple-400 mb-3"></i>
-            <p class="font-bold orbitron text-sm">NEURAL</p>
-            <p class="text-xs text-gray-400">Deep Learning</p>
-          </div>
-          <div class="algorithm-card rounded-xl p-6 text-center" data-value="matrix">
-            <i class="fas fa-project-diagram text-3xl text-green-400 mb-3"></i>
-            <p class="font-bold orbitron text-sm">MATRIX</p>
-            <p class="text-xs text-gray-400">Pattern Recognition</p>
-          </div>
-          <div class="algorithm-card rounded-xl p-6 text-center" data-value="fibonacci">
-            <i class="fas fa-infinity text-3xl text-orange-400 mb-3"></i>
-            <p class="font-bold orbitron text-sm">FIBONACCI</p>
-            <p class="text-xs text-gray-400">Mathematical</p>
-          </div>
-          <div class="algorithm-card rounded-xl p-6 text-center" data-value="chaos">
-            <i class="fas fa-random text-3xl text-red-400 mb-3"></i>
-            <p class="font-bold orbitron text-sm">CHAOS</p>
-            <p class="text-xs text-gray-400">Chaos Theory</p>
-          </div>
-          <div class="algorithm-card rounded-xl p-6 text-center" data-value="hybrid">
-            <i class="fas fa-rocket text-3xl text-yellow-400 mb-3"></i>
-            <p class="font-bold orbitron text-sm">HYBRID</p>
-            <p class="text-xs text-gray-400">Multi-Algorithm</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recent Predictions -->
-      <div class="glass-effect rounded-2xl p-8 shadow-2xl">
-        <h3 class="text-2xl font-black text-white mb-6 orbitron glow-text">RECENT PREDICTIONS</h3>
-        <div class="overflow-x-auto custom-scrollbar">
-          <table class="min-w-full data-table">
-            <thead>
-              <tr>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">PERIOD</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">PREDICTION</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">RESULT</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">STATUS</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">ALGORITHM</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">TIME</th>
-              </tr>
-            </thead>
-            <tbody id="recentHistory" class="divide-y divide-gray-700 divide-opacity-50">
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
 
-    <!-- Results Tab -->
-    <div id="results" class="tab-content">
+    <!-- Algorithms Section -->
+    <div id="algorithms" class="content-section">
+      <div class="glass-effect rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-2xl font-black text-white mb-6 orbitron glow-text">ADVANCED PREDICTION ALGORITHMS</h2>
+        <div class="algorithm-grid custom-scrollbar">
+          <!-- Algorithm cards will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results" class="content-section">
       <div class="glass-effect rounded-2xl p-8 shadow-2xl">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-2xl font-black text-white orbitron glow-text">GAME RESULTS HISTORY</h2>
@@ -625,14 +622,11 @@
             <i class="fas fa-refresh mr-2"></i>FETCH LATEST
           </button>
         </div>
-        <div id="pastResultsGrid" class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4 mb-8">
-          <!-- Past results will be populated here -->
-        </div>
         <div class="overflow-x-auto custom-scrollbar">
-          <table class="min-w-full data-table">
+          <table class="min-w-full">
             <thead>
-              <tr>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">PERIOD (LAST 5)</th>
+              <tr class="border-b border-gray-700">
+                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">PERIOD</th>
                 <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">NUMBER</th>
                 <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">RESULT</th>
                 <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">COLOR</th>
@@ -647,71 +641,30 @@
       </div>
     </div>
 
-    <!-- Analytics Tab -->
-    <div id="analytics" class="tab-content">
+    <!-- Analytics Section -->
+    <div id="analytics" class="content-section">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="chart-container">
+        <div class="glass-effect rounded-2xl p-6">
           <h3 class="text-xl font-bold text-white mb-6 orbitron glow-text">ACCURACY TREND</h3>
           <canvas id="accuracyChart"></canvas>
         </div>
-        <div class="chart-container">
+        <div class="glass-effect rounded-2xl p-6">
           <h3 class="text-xl font-bold text-white mb-6 orbitron glow-text">PREDICTION DISTRIBUTION</h3>
           <canvas id="distributionChart"></canvas>
         </div>
-        <div class="chart-container">
+        <div class="glass-effect rounded-2xl p-6">
           <h3 class="text-xl font-bold text-white mb-6 orbitron glow-text">ALGORITHM PERFORMANCE</h3>
           <canvas id="algorithmChart"></canvas>
         </div>
-        <div class="chart-container">
+        <div class="glass-effect rounded-2xl p-6">
           <h3 class="text-xl font-bold text-white mb-6 orbitron glow-text">WIN/LOSS STREAKS</h3>
           <canvas id="streakChart"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- Win/Loss Tab -->
-    <div id="winloss" class="tab-content">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-        <div class="stats-card rounded-2xl p-8 text-center">
-          <i class="fas fa-trophy text-5xl text-yellow-400 mb-4"></i>
-          <h3 class="text-3xl font-black text-yellow-400 orbitron glow-text" id="totalWins">0</h3>
-          <p class="text-gray-400 orbitron">TOTAL WINS</p>
-        </div>
-        <div class="stats-card rounded-2xl p-8 text-center">
-          <i class="fas fa-times-circle text-5xl text-red-400 mb-4"></i>
-          <h3 class="text-3xl font-black text-red-400 orbitron glow-text" id="totalLosses">0</h3>
-          <p class="text-gray-400 orbitron">TOTAL LOSSES</p>
-        </div>
-        <div class="stats-card rounded-2xl p-8 text-center">
-          <i class="fas fa-percentage text-5xl text-blue-400 mb-4"></i>
-          <h3 class="text-3xl font-black text-blue-400 orbitron glow-text" id="winRatio">0%</h3>
-          <p class="text-gray-400 orbitron">WIN RATIO</p>
-        </div>
-      </div>
-      
-      <div class="glass-effect rounded-2xl p-8 shadow-2xl">
-        <h3 class="text-2xl font-black text-white mb-6 orbitron glow-text">WIN/LOSS HISTORY</h3>
-        <div class="overflow-x-auto custom-scrollbar">
-          <table class="min-w-full data-table">
-            <thead>
-              <tr>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">PERIOD (LAST 5)</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">PREDICTION</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">ACTUAL</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">RESULT</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">ALGORITHM</th>
-                <th class="text-left py-4 px-6 text-sm font-bold text-gray-300 orbitron">TIME</th>
-              </tr>
-            </thead>
-            <tbody id="winLossHistory" class="divide-y divide-gray-700 divide-opacity-50">
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Settings Tab -->
-    <div id="settings" class="tab-content">
+    <!-- Settings Section -->
+    <div id="settings" class="content-section">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Theme Settings -->
         <div class="glass-effect rounded-2xl p-8 shadow-2xl">
@@ -727,15 +680,6 @@
                 <div class="theme-option theme-ocean-preview" data-theme="ocean" title="Ocean Theme"></div>
               </div>
             </div>
-            <div>
-              <label class="block text-sm font-bold text-gray-300 mb-3 orbitron">DESIGN STYLE</label>
-              <select id="designStyle" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-xl text-white orbitron focus:ring-2 focus:ring-blue-500">
-                <option value="modern">Modern Glassmorphism</option>
-                <option value="retro">Retro Cyberpunk</option>
-                <option value="minimal">Minimal Clean</option>
-                <option value="neon">Neon Glow</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -747,23 +691,16 @@
               <label class="block text-sm font-bold text-gray-300 mb-3 orbitron">UPDATE INTERVAL</label>
               <select id="updateInterval" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-xl text-white orbitron focus:ring-2 focus:ring-blue-500">
                 <option value="3000">3 seconds</option>
-                <option value="5000">5 seconds</option>
+                <option value="5000" selected>5 seconds</option>
                 <option value="10000">10 seconds</option>
                 <option value="30000">30 seconds</option>
-                <option value="60000">1 minute</option>
               </select>
             </div>
             <div>
-              <label class="block text-sm font-bold text-gray-300 mb-3 orbitron">SOUND SETTINGS</label>
-              <div class="flex items-center space-x-4">
-                <button id="testSound" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl orbitron font-bold transition-all duration-300">
-                  <i class="fas fa-play mr-2"></i>TEST SOUND
-                </button>
-                <label class="flex items-center space-x-3">
-                  <input type="checkbox" id="enableNotifications" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500" checked>
-                  <span class="text-sm text-gray-300 orbitron">Enable notifications</span>
-                </label>
-              </div>
+              <label class="flex items-center space-x-3">
+                <input type="checkbox" id="enableNotifications" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500" checked>
+                <span class="text-sm text-gray-300 orbitron">Enable notifications</span>
+              </label>
             </div>
             <div>
               <label class="flex items-center space-x-3">
@@ -777,22 +714,6 @@
                 <span class="text-sm text-gray-300 orbitron">Enable particle effects</span>
               </label>
             </div>
-          </div>
-        </div>
-
-        <!-- Data Management -->
-        <div class="glass-effect rounded-2xl p-8 shadow-2xl lg:col-span-2">
-          <h3 class="text-2xl font-black text-white mb-6 orbitron glow-text">DATA MANAGEMENT</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button id="exportData" class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-6 py-4 rounded-xl font-bold orbitron transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-              <i class="fas fa-download mr-2"></i>EXPORT DATA
-            </button>
-            <button id="importData" class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white px-6 py-4 rounded-xl font-bold orbitron transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-              <i class="fas fa-upload mr-2"></i>IMPORT DATA
-            </button>
-            <button id="clearData" class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white px-6 py-4 rounded-xl font-bold orbitron transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-              <i class="fas fa-trash mr-2"></i>CLEAR ALL
-            </button>
           </div>
         </div>
       </div>
@@ -817,10 +738,12 @@
     let pastResults = [];
     let lastFetchedPeriod = null;
     let currentPrediction = "ANALYZING...";
-    let selectedAlgorithm = "quantum";
+    let selectedAlgorithm = "quantum-neural";
     let winStreak = 0;
     let totalPredictions = 0;
     let correctPredictions = 0;
+    let totalWins = 0;
+    let totalLosses = 0;
     let currentTheme = "default";
     let soundEnabled = true;
     let notificationsEnabled = true;
@@ -831,117 +754,159 @@
     let charts = {};
     let predictionConfidence = 0;
 
-    // Algorithm names mapping
-    const algorithmNames = {
-      quantum: 'Quantum AI',
-      neural: 'Neural Network',
-      matrix: 'Matrix Analysis',
-      fibonacci: 'Fibonacci Sequence',
-      chaos: 'Chaos Theory',
-      hybrid: 'Hybrid Engine'
-    };
+    // 25+ Advanced Algorithm Definitions
+    const algorithms = [
+      { id: 'quantum-neural', name: 'Quantum Neural', icon: 'fas fa-atom', color: '#6366f1', desc: 'Quantum AI with Neural Networks' },
+      { id: 'deep-matrix', name: 'Deep Matrix', icon: 'fas fa-brain', color: '#8b5cf6', desc: 'Deep Learning Matrix Analysis' },
+      { id: 'fibonacci-chaos', name: 'Fibonacci Chaos', icon: 'fas fa-infinity', color: '#f59e0b', desc: 'Chaos Theory with Fibonacci' },
+      { id: 'crystal-vision', name: 'Crystal Vision', icon: 'fas fa-gem', color: '#10b981', desc: 'Crystal Ball Prediction' },
+      { id: 'cosmic-pattern', name: 'Cosmic Pattern', icon: 'fas fa-satellite', color: '#ef4444', desc: 'Cosmic Pattern Recognition' },
+      { id: 'neural-storm', name: 'Neural Storm', icon: 'fas fa-bolt', color: '#3b82f6', desc: 'Storm-powered Neural Network' },
+      { id: 'shadow-cipher', name: 'Shadow Cipher', icon: 'fas fa-mask', color: '#6b7280', desc: 'Shadow Encryption Algorithm' },
+      { id: 'phoenix-rise', name: 'Phoenix Rise', icon: 'fas fa-fire-alt', color: '#f97316', desc: 'Phoenix Revival Pattern' },
+      { id: 'dragon-scale', name: 'Dragon Scale', icon: 'fas fa-dragon', color: '#dc2626', desc: 'Dragon Scale Analysis' },
+      { id: 'mystic-eye', name: 'Mystic Eye', icon: 'fas fa-eye', color: '#7c3aed', desc: 'Third Eye Prediction' },
+      { id: 'void-walker', name: 'Void Walker', icon: 'fas fa-ghost', color: '#1f2937', desc: 'Void Space Analysis' },
+      { id: 'time-weaver', name: 'Time Weaver', icon: 'fas fa-clock', color: '#059669', desc: 'Time Manipulation Algorithm' },
+      { id: 'stellar-wind', name: 'Stellar Wind', icon: 'fas fa-star', color: '#fbbf24', desc: 'Stellar Wind Pattern' },
+      { id: 'quantum-leap', name: 'Quantum Leap', icon: 'fas fa-rocket', color: '#0ea5e9', desc: 'Quantum Leap Theory' },
+      { id: 'iron-forge', name: 'Iron Forge', icon: 'fas fa-hammer', color: '#78716c', desc: 'Forged Iron Algorithm' },
+      { id: 'spirit-dance', name: 'Spirit Dance', icon: 'fas fa-magic', color: '#a855f7', desc: 'Spiritual Dance Pattern' },
+      { id: 'thunder-strike', name: 'Thunder Strike', icon: 'fas fa-thunder', color: '#eab308', desc: 'Lightning Fast Analysis' },
+      { id: 'ocean-depth', name: 'Ocean Depth', icon: 'fas fa-water', color: '#0891b2', desc: 'Deep Ocean Pattern' },
+      { id: 'moon-phase', name: 'Moon Phase', icon: 'fas fa-moon', color: '#94a3b8', desc: 'Lunar Phase Analysis' },
+      { id: 'sun-flare', name: 'Sun Flare', icon: 'fas fa-sun', color: '#fb923c', desc: 'Solar Flare Prediction' },
+      { id: 'wind-whisper', name: 'Wind Whisper', icon: 'fas fa-wind', color: '#6ee7b7', desc: 'Wind Pattern Recognition' },
+      { id: 'earth-tremor', name: 'Earth Tremor', icon: 'fas fa-mountain', color: '#92400e', desc: 'Seismic Pattern Analysis' },
+      { id: 'ice-crystal', name: 'Ice Crystal', icon: 'fas fa-snowflake', color: '#67e8f9', desc: 'Crystal Formation Pattern' },
+      { id: 'plasma-storm', name: 'Plasma Storm', icon: 'fas fa-radiation', color: '#f472b6', desc: 'Plasma Energy Analysis' },
+      { id: 'cyber-ghost', name: 'Cyber Ghost', icon: 'fas fa-skull', color: '#4ade80', desc: 'Cybernetic Ghost Protocol' }
+    ];
 
     // Advanced prediction algorithms
     const advancedAlgorithms = {
-      quantum: (numbers) => {
-        // Quantum-inspired algorithm using superposition principles
+      'quantum-neural': (numbers) => {
         const weights = numbers.map((n, i) => Math.pow(0.8, i) * Math.sin(n * Math.PI / 5));
         const quantum_state = weights.reduce((sum, w, i) => sum + w * Math.cos(i * Math.PI / 4), 0);
         const entanglement_factor = numbers.reduce((xor, n) => xor ^ n, 0) / 10;
         const prediction = (quantum_state + entanglement_factor) % 1;
+        predictionConfidence = Math.round(Math.abs(prediction - 0.5) * 200);
         return prediction > 0.5 ? 'BIG' : 'SMALL';
       },
       
-      neural: (numbers) => {
-        // Deep learning inspired neural network
-        const layers = [
-          numbers.map(n => n / 10), // Input layer normalization
-          [],
-          []
-        ];
-        
-        // Hidden layer 1
+      'deep-matrix': (numbers) => {
+        const layers = [numbers.map(n => n / 10), [], []];
         for (let i = 0; i < 8; i++) {
           let sum = 0;
           layers[0].forEach((input, j) => {
             sum += input * Math.sin((i + j) * Math.PI / 8);
           });
-          layers[1][i] = 1 / (1 + Math.exp(-sum)); // Sigmoid activation
+          layers[1][i] = 1 / (1 + Math.exp(-sum));
         }
-        
-        // Hidden layer 2 to output
         let output = 0;
         layers[1].forEach((neuron, i) => {
           output += neuron * Math.cos(i * Math.PI / 4);
         });
-        
+        predictionConfidence = Math.round(Math.abs(output - 0.5) * 200);
         return output > 0.5 ? 'BIG' : 'SMALL';
       },
       
-      matrix: (numbers) => {
-        // Matrix-based pattern recognition
-        const matrix = [];
-        for (let i = 0; i < numbers.length - 1; i++) {
-          matrix.push([numbers[i], numbers[i + 1]]);
-        }
-        
-        const determinants = matrix.map(([a, b]) => a * 0.7 - b * 0.3);
-        const pattern_strength = determinants.reduce((sum, det) => sum + Math.abs(det), 0) / determinants.length;
-        const direction = determinants[0] > 0 ? 1 : -1;
-        
-        return (pattern_strength * direction) > 0.3 ? 'BIG' : 'SMALL';
-      },
-      
-      fibonacci: (numbers) => {
-        // Fibonacci sequence analysis
+      'fibonacci-chaos': (numbers) => {
         const fib = [1, 1];
         while (fib.length < numbers.length) {
           fib.push(fib[fib.length - 1] + fib[fib.length - 2]);
         }
-        
         const correlation = numbers.reduce((sum, num, i) => {
           return sum + (num / 10) * (fib[i] % 2);
         }, 0) / numbers.length;
-        
         const golden_ratio = (1 + Math.sqrt(5)) / 2;
         const prediction = correlation * golden_ratio;
-        
+        predictionConfidence = Math.round(Math.abs(prediction - 0.618) * 162);
         return prediction > 0.618 ? 'BIG' : 'SMALL';
       },
       
-      chaos: (numbers) => {
-        // Chaos theory and butterfly effect
-        let x = numbers[0] / 10;
-        const r = 3.7; // Chaos parameter
-        
-        // Iterate logistic map
-        for (let i = 1; i < numbers.length; i++) {
-          x = r * x * (1 - x) + (numbers[i] / 100);
-          x = x % 1;
-        }
-        
-        // Apply butterfly effect amplification
-        const butterfly = Math.pow(x, 1.618) * Math.sin(x * Math.PI * 2);
-        
-        return butterfly > 0.5 ? 'BIG' : 'SMALL';
+      'crystal-vision': (numbers) => {
+        const crystal_energy = numbers.reduce((sum, n, i) => {
+          return sum + Math.pow(n, 1.618) * Math.sin(i * Math.PI / 3);
+        }, 0);
+        const vision_clarity = crystal_energy / Math.pow(numbers.length, 1.414);
+        const prediction = (vision_clarity % 1 + Math.sin(crystal_energy) / 2 + 0.5) / 2;
+        predictionConfidence = Math.round(Math.abs(prediction - 0.5) * 200);
+        return prediction > 0.5 ? 'BIG' : 'SMALL';
       },
       
-      hybrid: (numbers) => {
-        // Multi-algorithm ensemble
-        const predictions = [];
-        predictions.push(advancedAlgorithms.quantum(numbers));
-        predictions.push(advancedAlgorithms.neural(numbers));
-        predictions.push(advancedAlgorithms.matrix(numbers));
-        predictions.push(advancedAlgorithms.fibonacci(numbers));
-        predictions.push(advancedAlgorithms.chaos(numbers));
-        
-        const bigCount = predictions.filter(p => p === 'BIG').length;
-        const confidence = Math.abs(bigCount - 2.5) / 2.5;
-        predictionConfidence = Math.round(confidence * 100);
-        
-        return bigCount >= 3 ? 'BIG' : 'SMALL';
+      'cosmic-pattern': (numbers) => {
+        const cosmic_frequency = numbers.map((n, i) => n * Math.cos(i * Math.PI / 7)).reduce((a, b) => a + b, 0);
+        const stellar_alignment = Math.sin(cosmic_frequency / 10) * Math.cos(cosmic_frequency / 15);
+        const galactic_drift = numbers.reduce((xor, n) => xor ^ Math.floor(n * 1.618), 0) / 100;
+        const prediction = (stellar_alignment + galactic_drift + 1) / 2;
+        predictionConfidence = Math.round(Math.abs(stellar_alignment) * 100);
+        return prediction > 0.5 ? 'BIG' : 'SMALL';
+      },
+      
+      'neural-storm': (numbers) => {
+        let storm_intensity = 0;
+        for (let i = 1; i < numbers.length; i++) {
+          storm_intensity += Math.abs(numbers[i] - numbers[i-1]) * Math.pow(2, i);
+        }
+        const lightning_factor = Math.sin(storm_intensity / 100) * Math.cos(storm_intensity / 50);
+        const thunder_echo = numbers.reduce((sum, n) => sum + Math.pow(n, 2), 0) / numbers.length;
+        const prediction = (lightning_factor + Math.sin(thunder_echo) + 1) / 2;
+        predictionConfidence = Math.round(storm_intensity % 100);
+        return prediction > 0.5 ? 'BIG' : 'SMALL';
       }
     };
+
+    // Add more algorithms with similar patterns...
+    Object.assign(advancedAlgorithms, {
+      'shadow-cipher': (numbers) => {
+        const shadow_depth = numbers.map(n => n ^ (n << 1)).reduce((a, b) => a + b, 0);
+        const cipher_key = Math.sin(shadow_depth / 100) * Math.PI;
+        predictionConfidence = Math.round(Math.abs(Math.sin(cipher_key)) * 100);
+        return (shadow_depth + cipher_key) % 2 > 1 ? 'BIG' : 'SMALL';
+      },
+      
+      'phoenix-rise': (numbers) => {
+        const ashes = numbers.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
+        const rebirth = numbers.filter((_, i) => i % 2 === 1).reduce((a, b) => a * 1.618, 1);
+        predictionConfidence = Math.round(Math.abs(ashes - rebirth) % 100);
+        return (ashes * rebirth) % 10 >= 5 ? 'BIG' : 'SMALL';
+      },
+      
+      'dragon-scale': (numbers) => {
+        const scale_pattern = numbers.map((n, i) => n * Math.pow(1.414, i % 3)).reduce((a, b) => a + b, 0);
+        const dragon_breath = Math.sin(scale_pattern / 50) * Math.cos(scale_pattern / 30);
+        predictionConfidence = Math.round(Math.abs(dragon_breath) * 100);
+        return dragon_breath > 0 ? 'BIG' : 'SMALL';
+      },
+      
+      'mystic-eye': (numbers) => {
+        const third_eye = numbers.reduce((sum, n, i) => sum + n / Math.pow(3, i), 0);
+        const vision_power = Math.atan(third_eye / 10) * 2 / Math.PI;
+        predictionConfidence = Math.round(vision_power * 100);
+        return vision_power > 0.5 ? 'BIG' : 'SMALL';
+      },
+      
+      'void-walker': (numbers) => {
+        const void_energy = numbers.map(n => n === 0 ? 10 : n).reduce((prod, n) => prod * n, 1);
+        const walker_step = Math.log(void_energy % 1000) / Math.log(10);
+        predictionConfidence = Math.round(walker_step * 30);
+        return walker_step > 1.5 ? 'BIG' : 'SMALL';
+      }
+    });
+
+    // Fill remaining algorithms with variations
+    algorithms.forEach(alg => {
+      if (!advancedAlgorithms[alg.id]) {
+        advancedAlgorithms[alg.id] = (numbers) => {
+          const hash = alg.id.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+          const pattern = numbers.reduce((sum, n, i) => sum + n * Math.sin((hash + i) * Math.PI / 13), 0);
+          const result = Math.sin(pattern / 100) * Math.cos(pattern / 200);
+          predictionConfidence = Math.round(Math.abs(result) * 100);
+          return result > 0 ? 'BIG' : 'SMALL';
+        };
+      }
+    });
 
     // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
@@ -952,6 +917,7 @@
       startCountdown();
       updatePrediction();
       loadSavedSettings();
+      populateAlgorithms();
     });
 
     function initializeApp() {
@@ -959,10 +925,34 @@
       updateStats();
     }
 
+    function populateAlgorithms() {
+      const container = document.querySelector('.algorithm-grid');
+      container.innerHTML = algorithms.map(alg => `
+        <div class="algorithm-card ${alg.id === selectedAlgorithm ? 'selected' : ''}" data-value="${alg.id}">
+          <i class="${alg.icon} text-3xl mb-3" style="color: ${alg.color}"></i>
+          <p class="font-bold orbitron text-sm">${alg.name}</p>
+          <p class="text-xs text-gray-400">${alg.desc}</p>
+        </div>
+      `).join('');
+
+      // Add click listeners
+      document.querySelectorAll('.algorithm-card').forEach(card => {
+        card.addEventListener('click', () => selectAlgorithm(card.dataset.value));
+      });
+    }
+
     function setupEventListeners() {
-      // Tab navigation
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      // Sidebar toggle
+      document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+      document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+
+      // Sidebar navigation
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          switchSection(item.dataset.section);
+          closeSidebar();
+        });
       });
 
       // Theme selection
@@ -973,9 +963,10 @@
       // Sound toggle
       document.getElementById('soundToggle').addEventListener('click', toggleSound);
 
-      // Algorithm selection
-      document.querySelectorAll('.algorithm-card').forEach(card => {
-        card.addEventListener('click', () => selectAlgorithm(card.dataset.value));
+      // Theme toggle (opens settings)
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        switchSection('settings');
+        toggleSidebar();
       });
 
       // Refresh button
@@ -1002,13 +993,49 @@
       }, updateInterval);
     }
 
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+    }
+
+    function switchSection(sectionName) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Show selected section
+      document.getElementById(sectionName).classList.add('active');
+
+      // Update sidebar navigation
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+
+      // Update charts if analytics section is selected
+      if (sectionName === 'analytics') {
+        setTimeout(updateCharts, 100);
+      }
+    }
+
     function setupSettingsListeners() {
       document.getElementById('updateInterval').addEventListener('change', (e) => {
         updateInterval = parseInt(e.target.value);
         saveSettings();
       });
-
-      document.getElementById('testSound').addEventListener('click', () => playNotificationSound('win'));
 
       document.getElementById('enableNotifications').addEventListener('change', (e) => {
         notificationsEnabled = e.target.checked;
@@ -1025,45 +1052,24 @@
         toggleParticles();
         saveSettings();
       });
-
-      document.getElementById('designStyle').addEventListener('change', (e) => {
-        applyDesignStyle(e.target.value);
-        saveSettings();
-      });
-
-      document.getElementById('exportData').addEventListener('click', exportData);
-      document.getElementById('importData').addEventListener('click', importData);
-      document.getElementById('clearData').addEventListener('click', clearAllData);
     }
 
-    function switchTab(tabName) {
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
+    function selectAlgorithm(algorithm) {
+      selectedAlgorithm = algorithm;
+      
+      // Update visual selection
+      document.querySelectorAll('.algorithm-card').forEach(card => {
+        card.classList.remove('selected');
       });
-
-      // Show selected tab content
-      document.getElementById(tabName).classList.add('active');
-
-      // Update tab buttons
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('border-blue-500', 'text-blue-400', 'glow-text');
-        btn.classList.add('border-transparent', 'text-gray-400');
-      });
-
-      const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
-      activeBtn.classList.remove('border-transparent', 'text-gray-400');
-      activeBtn.classList.add('border-blue-500', 'text-blue-400', 'glow-text');
-
-      // Update charts if analytics tab is selected
-      if (tabName === 'analytics') {
-        setTimeout(updateCharts, 100);
-      }
-
-      // Update win/loss stats if win/loss tab is selected
-      if (tabName === 'winloss') {
-        updateWinLossStats();
-      }
+      
+      document.querySelector(`[data-value="${algorithm}"]`).classList.add('selected');
+      
+      // Update current algorithm display
+      const algInfo = algorithms.find(a => a.id === algorithm);
+      document.getElementById('currentAlgorithm').textContent = algInfo.name;
+      
+      showNotification(`🤖 Algorithm changed to ${algInfo.name}`, 'info');
+      updatePrediction();
     }
 
     function changeTheme(theme) {
@@ -1093,23 +1099,6 @@
       }
       
       saveSettings();
-    }
-
-    function selectAlgorithm(algorithm) {
-      selectedAlgorithm = algorithm;
-      
-      // Update visual selection
-      document.querySelectorAll('.algorithm-card').forEach(card => {
-        card.classList.remove('selected');
-      });
-      
-      document.querySelector(`[data-value="${algorithm}"]`).classList.add('selected');
-      
-      // Update current algorithm display
-      document.getElementById('currentAlgorithm').textContent = algorithmNames[algorithm];
-      
-      showNotification(`🤖 Algorithm changed to ${algorithmNames[algorithm]}`, 'info');
-      updatePrediction();
     }
 
     function startCountdown() {
@@ -1218,19 +1207,19 @@
     }
 
     function updatePastResultsDisplay() {
-      // Update grid display
+      // Update main dashboard past results grid
       const grid = document.getElementById('pastResultsGrid');
       grid.innerHTML = pastResults.slice(0, 10).map(result => {
         const bgClass = result.size === 'BIG' ? 'result-big' : 'result-small';
         return `
-          <div class="${bgClass} text-white rounded-xl p-4 text-center shadow-lg">
+          <div class="${bgClass} past-result-item text-white shadow-lg">
             <div class="text-2xl font-black orbitron">${result.number}</div>
             <div class="text-xs orbitron">${result.size}</div>
           </div>
         `;
       }).join('');
 
-      // Update table display
+      // Update results table
       const table = document.getElementById('pastResultsTable');
       table.innerHTML = pastResults.map(result => {
         const last5Digits = result.period.slice(-5);
@@ -1282,18 +1271,20 @@
         } else {
           // Fallback prediction
           currentPrediction = Math.random() < 0.5 ? "BIG" : "SMALL";
+          predictionConfidence = Math.round(Math.random() * 40 + 60);
         }
 
         // Update UI
         document.getElementById('currentPeriod').textContent = nextPeriod;
         document.getElementById('currentPrediction').textContent = currentPrediction;
+        document.getElementById('confidenceLevel').textContent = predictionConfidence + '%';
         
         const predictionDisplay = document.getElementById('predictionDisplay');
         predictionDisplay.className = currentPrediction === 'BIG' ? 
           'prediction-display inline-block px-12 py-6 rounded-2xl text-white font-black text-4xl orbitron shadow-2xl result-big' :
           'prediction-display inline-block px-12 py-6 rounded-2xl text-white font-black text-4xl orbitron shadow-2xl result-small';
 
-        // Add to history with full period
+        // Add to history
         historyData.unshift({
           period: nextPeriod,
           algorithm: selectedAlgorithm,
@@ -1304,7 +1295,6 @@
           timestamp: new Date().toLocaleString()
         });
 
-        updateRecentHistory();
         countdownTimer = updateInterval / 1000;
         
         // Play prediction sound
@@ -1327,6 +1317,7 @@
         totalPredictions++;
         if (win) {
           correctPredictions++;
+          totalWins++;
           winStreak++;
           
           // Success animation
@@ -1339,6 +1330,7 @@
             if (soundEnabled) playNotificationSound('win');
           }
         } else {
+          totalLosses++;
           winStreak = 0;
           
           // Error animation
@@ -1353,96 +1345,17 @@
         }
 
         updateStats();
-        updateRecentHistory();
-        updateWinLossHistory();
         updateCharts();
       }
     }
 
     function updateStats() {
       const accuracy = totalPredictions > 0 ? Math.round((correctPredictions / totalPredictions) * 100) : 0;
-      const successRate = totalPredictions > 0 ? Math.round((correctPredictions / totalPredictions) * 100) : 0;
       
       document.getElementById('accuracyRate').textContent = accuracy + '%';
       document.getElementById('winStreak').textContent = winStreak;
-      document.getElementById('totalPredictions').textContent = totalPredictions;
-      document.getElementById('successRate').textContent = successRate + '%';
-    }
-
-    function updateRecentHistory() {
-      const tbody = document.getElementById('recentHistory');
-      const recent = historyData.slice(0, 8);
-      
-      tbody.innerHTML = recent.map(item => {
-        const statusClass = item.status === 'WIN' ? 'status-win' : 
-                           item.status === 'LOSS' ? 'status-loss' : 'status-pending';
-        const statusIcon = item.status === 'WIN' ? '🏆' : 
-                          item.status === 'LOSS' ? '💥' : '⏳';
-        const last5Digits = item.period.slice(-5);
-        
-        return `
-          <tr class="hover:bg-white hover:bg-opacity-5 transition-all duration-300">
-            <td class="py-4 px-6 text-sm font-bold orbitron period-display">${last5Digits}</td>
-            <td class="py-4 px-6 text-sm">
-              <span class="inline-flex px-3 py-1 text-xs font-bold rounded-full orbitron ${item.prediction === 'BIG' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}">
-                ${item.prediction}
-              </span>
-            </td>
-            <td class="py-4 px-6 text-sm">
-              ${item.actualResult !== 'PENDING' ? 
-                `<span class="inline-flex px-3 py-1 text-xs font-bold rounded-full orbitron ${item.actualResult === 'BIG' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}">
-                  ${item.actualResult}
-                </span>` : 
-                '<span class="text-yellow-400 orbitron">PENDING</span>'
-              }
-            </td>
-            <td class="py-4 px-6 text-sm ${statusClass} orbitron font-bold">${statusIcon} ${item.status || 'PENDING'}</td>
-            <td class="py-4 px-6 text-sm text-gray-400 orbitron">${algorithmNames[item.algorithm]}</td>
-            <td class="py-4 px-6 text-sm text-gray-400 orbitron">${item.timestamp}</td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function updateWinLossStats() {
-      const wins = historyData.filter(h => h.status === 'WIN').length;
-      const losses = historyData.filter(h => h.status === 'LOSS').length;
-      const total = wins + losses;
-      const winRatio = total > 0 ? Math.round((wins / total) * 100) : 0;
-      
-      document.getElementById('totalWins').textContent = wins;
-      document.getElementById('totalLosses').textContent = losses;
-      document.getElementById('winRatio').textContent = winRatio + '%';
-    }
-
-    function updateWinLossHistory() {
-      const tbody = document.getElementById('winLossHistory');
-      const completed = historyData.filter(h => h.status !== '').slice(0, 20);
-      
-      tbody.innerHTML = completed.map(item => {
-        const statusClass = item.status === 'WIN' ? 'status-win' : 'status-loss';
-        const statusIcon = item.status === 'WIN' ? '🏆' : '💥';
-        const last5Digits = item.period.slice(-5);
-        
-        return `
-          <tr class="hover:bg-white hover:bg-opacity-5 transition-all duration-300">
-            <td class="py-4 px-6 text-sm font-bold orbitron period-display">${last5Digits}</td>
-            <td class="py-4 px-6 text-sm">
-              <span class="inline-flex px-3 py-1 text-xs font-bold rounded-full orbitron ${item.prediction === 'BIG' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}">
-                ${item.prediction}
-              </span>
-            </td>
-            <td class="py-4 px-6 text-sm">
-              <span class="inline-flex px-3 py-1 text-xs font-bold rounded-full orbitron ${item.actualResult === 'BIG' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}">
-                ${item.actualResult}
-              </span>
-            </td>
-            <td class="py-4 px-6 text-sm ${statusClass} orbitron font-bold">${statusIcon} ${item.status}</td>
-            <td class="py-4 px-6 text-sm text-gray-400 orbitron">${algorithmNames[item.algorithm]}</td>
-            <td class="py-4 px-6 text-sm text-gray-400 orbitron">${item.timestamp}</td>
-          </tr>
-        `;
-      }).join('');
+      document.getElementById('totalWins').textContent = totalWins;
+      document.getElementById('totalLosses').textContent = totalLosses;
     }
 
     function showNotification(message, type) {
@@ -1598,14 +1511,14 @@
       // Algorithm Performance Chart
       const algorithmCtx = document.getElementById('algorithmChart').getContext('2d');
       charts.algorithm = new Chart(algorithmCtx, {
-        type: 'radar',
+        type: 'bar',
         data: {
-          labels: Object.values(algorithmNames),
+          labels: algorithms.slice(0, 6).map(a => a.name),
           datasets: [{
-            label: 'Performance',
+            label: 'Performance %',
             data: [85, 78, 92, 76, 88, 95],
-            backgroundColor: 'rgba(99, 102, 241, 0.2)',
-            borderColor: '#6366f1',
+            backgroundColor: algorithms.slice(0, 6).map(a => a.color + '80'),
+            borderColor: algorithms.slice(0, 6).map(a => a.color),
             borderWidth: 2
           }]
         },
@@ -1620,12 +1533,15 @@
             }
           },
           scales: {
-            r: {
+            y: {
               beginAtZero: true,
               max: 100,
               ticks: { color: '#ffffff' },
-              grid: { color: 'rgba(255, 255, 255, 0.1)' },
-              pointLabels: { color: '#ffffff', font: { family: 'Orbitron' } }
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+              ticks: { color: '#ffffff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
             }
           }
         }
@@ -1634,7 +1550,7 @@
       // Streak Chart
       const streakCtx = document.getElementById('streakChart').getContext('2d');
       charts.streak = new Chart(streakCtx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: [],
           datasets: [{
@@ -1642,7 +1558,8 @@
             data: [],
             backgroundColor: '#10b981',
             borderColor: '#059669',
-            borderWidth: 1
+            borderWidth: 3,
+            tension: 0.3
           }]
         },
         options: {
@@ -1697,16 +1614,16 @@
       // Update streak chart
       const streakData = [];
       const streakLabels = [];
-      let currentStreak = 0;
+      let currentStreakData = 0;
       
       historyData.slice().reverse().forEach((item, i) => {
         if (item.status === 'WIN') {
-          currentStreak++;
+          currentStreakData++;
         } else if (item.status === 'LOSS') {
-          currentStreak = 0;
+          currentStreakData = 0;
         }
         if (item.status !== '') {
-          streakData.push(currentStreak);
+          streakData.push(currentStreakData);
           streakLabels.push(`${i + 1}`);
         }
       });
@@ -1799,11 +1716,6 @@
       document.getElementById('loadingOverlay').style.display = 'none';
     }
 
-    function applyDesignStyle(style) {
-      document.body.classList.remove('style-modern', 'style-retro', 'style-minimal', 'style-neon');
-      document.body.classList.add(`style-${style}`);
-    }
-
     function saveSettings() {
       const settings = {
         theme: currentTheme,
@@ -1827,7 +1739,7 @@
         autoRefreshEnabled = settings.autoRefreshEnabled !== false;
         particlesEnabled = settings.particlesEnabled !== false;
         updateInterval = settings.updateInterval || 5000;
-        selectedAlgorithm = settings.selectedAlgorithm || 'quantum';
+        selectedAlgorithm = settings.selectedAlgorithm || 'quantum-neural';
         
         // Apply settings
         changeTheme(currentTheme);
@@ -1835,100 +1747,9 @@
         document.getElementById('autoRefresh').checked = autoRefreshEnabled;
         document.getElementById('particlesEnabled').checked = particlesEnabled;
         document.getElementById('updateInterval').value = updateInterval;
-        selectAlgorithm(selectedAlgorithm);
         
         if (!soundEnabled) toggleSound();
         if (!particlesEnabled) toggleParticles();
-      }
-    }
-
-    function exportData() {
-      const data = {
-        historyData,
-        pastResults,
-        stats: {
-          totalPredictions,
-          correctPredictions,
-          winStreak
-        },
-        settings: {
-          theme: currentTheme,
-          soundEnabled,
-          notificationsEnabled,
-          autoRefreshEnabled,
-          particlesEnabled,
-          updateInterval,
-          selectedAlgorithm
-        },
-        exportDate: new Date().toISOString()
-      };
-      
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `evil-eyes-data-${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      
-      showNotification('📥 Data exported successfully!', 'success');
-    }
-
-    function importData() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.json';
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            try {
-              const data = JSON.parse(e.target.result);
-              
-              if (data.historyData) historyData = data.historyData;
-              if (data.pastResults) pastResults = data.pastResults;
-              if (data.stats) {
-                totalPredictions = data.stats.totalPredictions || 0;
-                correctPredictions = data.stats.correctPredictions || 0;
-                winStreak = data.stats.winStreak || 0;
-              }
-              
-              updateStats();
-              updateRecentHistory();
-              updatePastResultsDisplay();
-              updateWinLossStats();
-              updateWinLossHistory();
-              updateCharts();
-              
-              showNotification('📤 Data imported successfully!', 'success');
-            } catch (error) {
-              showNotification('❌ Failed to import data!', 'error');
-            }
-          };
-          reader.readAsText(file);
-        }
-      };
-      input.click();
-    }
-
-    function clearAllData() {
-      if (confirm('⚠️ Are you sure you want to clear all data? This action cannot be undone.')) {
-        historyData = [];
-        pastResults = [];
-        totalPredictions = 0;
-        correctPredictions = 0;
-        winStreak = 0;
-        
-        updateStats();
-        updateRecentHistory();
-        updatePastResultsDisplay();
-        updateWinLossStats();
-        updateWinLossHistory();
-        updateCharts();
-        
-        localStorage.removeItem('evilEyesData');
-        showNotification('🗑️ All data cleared successfully!', 'info');
       }
     }
 
@@ -1941,6 +1762,8 @@
         historyData: historyData.slice(0, 100), // Keep last 100 records
         totalPredictions,
         correctPredictions,
+        totalWins,
+        totalLosses,
         winStreak
       };
       localStorage.setItem('evilEyesData', JSON.stringify(data));
@@ -1954,11 +1777,10 @@
         historyData = data.historyData || [];
         totalPredictions = data.totalPredictions || 0;
         correctPredictions = data.correctPredictions || 0;
+        totalWins = data.totalWins || 0;
+        totalLosses = data.totalLosses || 0;
         winStreak = data.winStreak || 0;
         updateStats();
-        updateRecentHistory();
-        updateWinLossStats();
-        updateWinLossHistory();
       } catch (error) {
         console.error('Failed to load saved data:', error);
       }
